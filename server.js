@@ -6,8 +6,6 @@ const path = require("path");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
-const authRouter = require("./routes/auth-routes");
-
 // Swagger configuration
 const options = {
   definition: {
