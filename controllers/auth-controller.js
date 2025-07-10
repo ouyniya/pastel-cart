@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
     });
 
     if (isDuplicatedEmail) {
-      return createError(400, "The email is already in use");
+      return createError(409, "Duplicated Email");
     }
 
     if (isDuplicatedName) {
@@ -42,7 +42,7 @@ exports.register = async (req, res) => {
 
     res.json({ message: "Register successful" });
   } catch (error) {
-    console.log(error);
+    console.log("Register error: ", error);
     createError(500, "Internal server error");
   }
 };
@@ -90,7 +90,7 @@ exports.login = async (req, res) => {
       }
     );
   } catch (error) {
-    console.log(error);
+    console.log("Login error: ", error);
     createError(500, "Internal server error");
   }
 };
@@ -117,7 +117,7 @@ exports.currentUser = async (req, res) => {
 
     res.json({ user });
   } catch (error) {
-    console.log(error);
+    console.log("Get current user error: ", error);
     createError(500, "Internal server error");
   }
 };

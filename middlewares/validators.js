@@ -19,6 +19,10 @@ exports.loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+exports.categorySchema = z.object({
+  name: z.string().min(3, "Category name must be at least 3 characters")
+})
+
 exports.validationZod = (schema) => (req, next) => {
   try {
     schema.parse(req.body);

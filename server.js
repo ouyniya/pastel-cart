@@ -15,6 +15,15 @@ const options = {
       version: "1.0.0",
       description: "API documentation for my project",
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   apis: ["./routes/*.js"],
 };
@@ -23,7 +32,6 @@ const swaggerSpec = swaggerJSDoc(options);
 
 // Swagger UI
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 
 // middleware
 app.use(morgan("dev"));

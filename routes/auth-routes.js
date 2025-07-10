@@ -6,6 +6,11 @@ const {
   currentUser,
 } = require("../controllers/auth-controller");
 const { authCheck, adminCheck } = require("../middlewares/auth-check");
+const {
+  validationZod,
+  registerSchema,
+  loginSchema,
+} = require("../middlewares/validators");
 
 /**
  * @swagger
@@ -29,7 +34,7 @@ const { authCheck, adminCheck } = require("../middlewares/auth-check");
  *       200:
  *         description: Successfully registered
  */
-router.post("/register", register);
+router.post("/register", validationZod(registerSchema), register);
 
 /**
  * @swagger
@@ -51,7 +56,7 @@ router.post("/register", register);
  *       200:
  *         description: Successfully logged in
  */
-router.post("/login", login);
+router.post("/login", validationZod(loginSchema), login);
 
 /**
  * @swagger
