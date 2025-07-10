@@ -140,7 +140,7 @@ exports.removeProduct = async (req, res) => {
         id,
       },
     });
-    res.json("Remove product successfully");
+    res.json({ message: "Remove product successfully" });
   } catch (error) {
     console.log("Remove product error :", error);
     createError(500, "Internal server error");
@@ -288,7 +288,7 @@ exports.removeImages = async (req, res) => {
     const { public_id } = req.body;
 
     cloudinary.uploader.destroy(public_id, (result) => {
-      res.json("Remove Image Successfully");
+      res.json({ message: "Remove Image Successfully" });
     });
   } catch (error) {
     console.log("Remove images error: ", error);
