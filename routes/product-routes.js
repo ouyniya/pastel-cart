@@ -9,8 +9,10 @@ const {
   searchFilter,
   addImages,
   removeImages,
+  getProducts,
+  updateProduct,
 } = require("../controllers/product-controllers");
-const { authCheck, adminCheck } = require("../middlewares/authCheck");
+const { authCheck, adminCheck } = require("../middlewares/auth-check");
 
 /**
  * @swagger

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { authCheck, adminCheck } = require("../middlewares/authCheck");
+const { authCheck, adminCheck } = require("../middlewares/auth-check");
 const {
   getListOfUsers,
   changeUserStatus,
@@ -11,7 +11,7 @@ const {
   saveAddress,
   saveOrder,
   getOrder,
-} = require("../controllers/user");
+} = require("../controllers/user-controllers");
 
 /**
  * @swagger

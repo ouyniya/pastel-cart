@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
-const { readdirSync } = require("fs");
+const fs = require("fs");
+const path = require("path");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -39,9 +40,16 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 // router
-readdirSync("./routes").map((route) =>
-  app.use("/api", require("./routes/" + route))
-);
+fs.readdirSync("./routes")
+  .filter(file => file.endsWith(".js"))
+  .forEach(file => {
+    const router = require(path.join(__dirname, "routes", file));
+    if (typeof router === "function" || (router && router.stack)) {
+      app.use("/api", router);
+    } else {
+      console.warn(`Skipping file ${file}, not a valid router`);
+    }
+  });
 
 // start server
 app.listen(5001, () => console.log("server is running on port 5001"));

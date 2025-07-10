@@ -1,4 +1,4 @@
-const prisma = require("../config/prisma");
+const prisma = require("../configs/prisma");
 const createError = require("../utils/create-error");
 
 exports.getListOfUsers = async (req, res) => {
