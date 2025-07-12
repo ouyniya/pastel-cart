@@ -31,7 +31,7 @@ exports.changeOrderStatus = async (req, res) => {
     res.json(orderUpdate);
   } catch (error) {
     console.error("Change order status error:", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -57,6 +57,6 @@ exports.getOrderAdmin = async (req, res) => {
     res.json(orders);
   } catch (error) {
     console.error("Get order admin error:", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };

@@ -1,6 +1,6 @@
 const createError = (statusCode, message) => {
   const error = new Error(message);
-  error.statusCode = statusCode;
+  error.statusCode = statusCode || 500;
   throw error;
 };
 

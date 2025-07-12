@@ -42,8 +42,8 @@ exports.register = async (req, res) => {
 
     res.json({ message: "Register successful" });
   } catch (error) {
-    console.log("Register error: ", error);
-    createError(500, "Internal server error");
+    console.log("Register error: ", error.message);
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -84,14 +84,14 @@ exports.login = async (req, res) => {
       { expiresIn: "1d" },
       (error, token) => {
         if (error) {
-          return createError(500, "Internal server error");
+          return res.status(500).json({ errors: error.message });
         }
-        res.json({ message: "Login successful", token }); // do not send user data in this step
+        res.json({ message: "Login successful", user: userPayload, token }); // do not send user data in this step
       }
     );
   } catch (error) {
     console.log("Login error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -118,6 +118,6 @@ exports.currentUser = async (req, res) => {
     res.json({ user });
   } catch (error) {
     console.log("Get current user error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message });
   }
 };

@@ -20,7 +20,7 @@ exports.getListOfUsers = async (req, res) => {
     res.json(users);
   } catch (error) {
     console.log("List of user error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -50,7 +50,7 @@ exports.changeUserStatus = async (req, res) => {
     res.json({ message: "Update Status Success" });
   } catch (error) {
     console.log("Change user status error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -80,7 +80,7 @@ exports.changeUserRole = async (req, res) => {
     res.send("Update Role Success");
   } catch (error) {
     console.log("Update Role error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -147,7 +147,7 @@ exports.createUserCart = async (req, res) => {
     res.send("Add Cart done");
   } catch (error) {
     console.log("Create user cart error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -178,7 +178,7 @@ exports.getUserCart = async (req, res) => {
     });
   } catch (error) {
     console.log("Cart searching error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -208,7 +208,7 @@ exports.emptyCart = async (req, res) => {
     });
   } catch (error) {
     console.log("Empty cart error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -229,7 +229,7 @@ exports.saveAddress = async (req, res) => {
     res.json({ ok: true, message: "Address update success" });
   } catch (error) {
     console.log("Saving address error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -293,7 +293,7 @@ exports.saveOrder = async (req, res) => {
     res.json({ ok: true, order });
   } catch (error) {
     console.log("Saving order error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -318,6 +318,6 @@ exports.getOrder = async (req, res) => {
     res.json({ ok: true, orders });
   } catch (error) {
     console.log("Order error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };

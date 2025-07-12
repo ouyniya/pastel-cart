@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const { dynamicCorsOptions } = require("./configs/cors");
 
 // Swagger configuration
 const options = {
@@ -34,13 +36,14 @@ const swaggerSpec = swaggerJSDoc(options);
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // middleware
+app.use(cors(dynamicCorsOptions));
 app.use(morgan("dev"));
 app.use(express.json());
 
 // router
 fs.readdirSync("./routes")
-  .filter(file => file.endsWith(".js"))
-  .forEach(file => {
+  .filter((file) => file.endsWith(".js"))
+  .forEach((file) => {
     const router = require(path.join(__dirname, "routes", file));
     if (typeof router === "function" || (router && router.stack)) {
       app.use("/api", router);

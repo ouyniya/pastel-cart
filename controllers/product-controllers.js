@@ -27,7 +27,7 @@ exports.createProduct = async (req, res) => {
     res.json(product);
   } catch (error) {
     console.log("Create product error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -53,7 +53,7 @@ exports.productList = async (req, res) => {
     res.json(products);
   } catch (error) {
     console.log("Get product list error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -78,7 +78,7 @@ exports.getProducts = async (req, res) => {
     res.json(product);
   } catch (error) {
     console.log("Get product by id error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -122,7 +122,7 @@ exports.updateProduct = async (req, res) => {
     res.json(product);
   } catch (error) {
     console.log("Update product error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -143,7 +143,7 @@ exports.removeProduct = async (req, res) => {
     res.json({ message: "Remove product successfully" });
   } catch (error) {
     console.log("Remove product error :", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -169,7 +169,7 @@ exports.listProductBy = async (req, res) => {
     res.json(products);
   } catch (error) {
     console.log("Sort product error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -194,7 +194,7 @@ exports.searchProductByName = async (req, res, query) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by name error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -220,7 +220,7 @@ const searchProductByPrice = async (req, res, priceRange) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by price error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -245,7 +245,7 @@ const searchProductByCategory = async (req, res, categoryId) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by category error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -264,7 +264,7 @@ exports.searchFilter = async (req, res) => {
     }
   } catch (error) {
     console.log("Search filter error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -279,7 +279,7 @@ exports.addImages = async (req, res) => {
     res.json(result);
   } catch (error) {
     console.log("Search filter error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -292,6 +292,6 @@ exports.removeImages = async (req, res) => {
     });
   } catch (error) {
     console.log("Remove images error: ", error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };

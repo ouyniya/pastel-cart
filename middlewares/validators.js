@@ -1,4 +1,5 @@
-const { z } = require("zod");
+const { z, ZodError } = require("zod");
+const createError = require("../utils/create-error");
 
 exports.registerSchema = z
   .object({
@@ -7,7 +8,7 @@ exports.registerSchema = z
     password: z.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: z
       .string()
-      .min(6, "Password must be at least 6 characters"),
+      .min(6, "Confirm Password must be at least 6 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Password does not match",
@@ -20,19 +21,40 @@ exports.loginSchema = z.object({
 });
 
 exports.categorySchema = z.object({
-  name: z.string().min(3, "Category name must be at least 3 characters")
-})
+  name: z.string().min(3, "Category name must be at least 3 characters"),
+});
 
-exports.validationZod = (schema) => (req, next) => {
+exports.validationZod = (schema) => (req, res, next) => {
   try {
     schema.parse(req.body);
     next();
   } catch (error) {
-    console.log(error);
-    const errMsg = error.errors.map(
-      (el) => el.path[0] + ":" + el.message.join(", ")
-    );
-    const mergedError = new Error(errMsg);
-    next(mergedError);
+    if (error instanceof ZodError) {
+      let issues = [];
+
+      try {
+        issues = JSON.parse(error.message);
+      } catch (error) {
+        issues = [];
+      }
+
+      const formattedErrors = issues.map((err) => ({
+        field: err.path.join("."),
+        message: err.message,
+      }));
+
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: formattedErrors,
+      });
+    }
+
+    // fallback
+    res.status(400).json({
+      success: false,
+      message: "Invalid input",
+      errors: [],
+    });
   }
 };

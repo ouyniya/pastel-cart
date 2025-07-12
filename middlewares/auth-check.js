@@ -26,7 +26,7 @@ exports.authCheck = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -49,6 +49,6 @@ exports.adminCheck = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
-    createError(500, "Internal server error");
+    res.status(500).json({ errors: error.message })
   }
 };

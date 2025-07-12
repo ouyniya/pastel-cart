@@ -25,7 +25,7 @@ exports.createCategory = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Create category error: ", error);
-    createError(500, "Internal Server Error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -40,7 +40,7 @@ exports.categoryList = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Get category error: ", error);
-    createError(500, "Internal Server Error");
+    res.status(500).json({ errors: error.message })
   }
 };
 
@@ -64,6 +64,6 @@ exports.removeCategory = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Remove category error: ", error);
-    createError(500, "Internal Server Error");
+    res.status(500).json({ errors: error.message })
   }
 };

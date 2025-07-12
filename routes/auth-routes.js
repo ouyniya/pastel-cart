@@ -11,6 +11,7 @@ const {
   registerSchema,
   loginSchema,
 } = require("../middlewares/validators");
+const { authLimit } = require("../utils/rate-limit");
 
 /**
  * @swagger
@@ -34,7 +35,7 @@ const {
  *       200:
  *         description: Successfully registered
  */
-router.post("/register", validationZod(registerSchema), register);
+router.post("/register", authLimit, validationZod(registerSchema), register);
 
 /**
  * @swagger
@@ -56,7 +57,7 @@ router.post("/register", validationZod(registerSchema), register);
  *       200:
  *         description: Successfully logged in
  */
-router.post("/login", validationZod(loginSchema), login);
+router.post("/login", authLimit, validationZod(loginSchema), login);
 
 /**
  * @swagger
