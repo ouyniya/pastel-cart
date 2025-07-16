@@ -26,6 +26,9 @@ exports.authCheck = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error);
+    if (error.message === 'invalid signature') {
+      res.status(401).json({errors: "session expired"})
+    }
     res.status(500).json({ errors: error.message })
   }
 };

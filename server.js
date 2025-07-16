@@ -52,5 +52,10 @@ fs.readdirSync("./routes")
     }
   });
 
+// =====  404 Not Found Handler (ต้องอยู่ล่างสุดเสมอ) =====
+app.use((req, res) => {
+  res.status(404).json({ errors: "Page not found" });
+});
+
 // start server
 app.listen(5001, () => console.log("server is running on port 5001"));
