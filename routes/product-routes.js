@@ -13,6 +13,7 @@ const {
   updateProduct,
 } = require("../controllers/product-controllers");
 const { authCheck, adminCheck } = require("../middlewares/auth-check");
+const { validationZod, productSchema } = require("../middlewares/validators");
 
 /**
  * @swagger
@@ -72,7 +73,13 @@ const { authCheck, adminCheck } = require("../middlewares/auth-check");
  *       500:
  *         description: Internal server error
  */
-router.post("/product", authCheck, adminCheck, createProduct);
+router.post(
+  "/product",
+  authCheck,
+  adminCheck,
+  validationZod(productSchema),
+  createProduct
+);
 
 /**
  * @swagger

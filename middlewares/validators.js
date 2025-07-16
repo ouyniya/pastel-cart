@@ -24,6 +24,24 @@ exports.categorySchema = z.object({
   name: z.string().min(3, "Category name must be at least 3 characters"),
 });
 
+exports.productSchema = z.object({
+  title: z
+    .string()
+    .min(3, "Product title must be at least 3 characters")
+    .max(50, "Product title must not be more than 50 characters"),
+  description: z
+    .string()
+    .min(3, "Description must be at least 3 characters")
+    .max(100, "Description must not be more than 100 characters"),
+  price: z.coerce.number().min(1).max(5000),
+  quantity: z.coerce.number().min(1).max(1000),
+  categoryId: z
+    .string()
+    .min(3, "Category id must be at least 3 characters")
+    .max(100, "Category id must not be more than 100 characters"),
+  images: z.any().optional(),
+});
+
 exports.validationZod = (schema) => (req, res, next) => {
   try {
     schema.parse(req.body);

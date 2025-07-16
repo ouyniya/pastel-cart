@@ -7,27 +7,32 @@ exports.createProduct = async (req, res) => {
     const { title, description, price, quantity, categoryId, images } =
       req.body;
 
+    // validate
+
     const product = await prisma.product.create({
       data: {
-        title: title,
-        description: description,
+        title,
+        description,
         price: parseFloat(price),
         quantity: parseInt(quantity),
-        categoryId: parseInt(categoryId),
-        images: {
-          create: images.map((item) => ({
-            asset_id: item.asset_id,
-            public_id: item.public_id,
-            url: item.url,
-            secure_url: item.secure_url,
-          })),
-        },
+        categoryId,
+        ...(images?.length > 0 && {
+          images: {
+            create: images.map((item) => ({
+              asset_id: item.asset_id,
+              public_id: item.public_id,
+              url: item.url,
+              secure_url: item.secure_url,
+            })),
+          },
+        }),
       },
     });
+
     res.json(product);
   } catch (error) {
     console.log("Create product error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -53,7 +58,7 @@ exports.productList = async (req, res) => {
     res.json(products);
   } catch (error) {
     console.log("Get product list error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -78,7 +83,7 @@ exports.getProducts = async (req, res) => {
     res.json(product);
   } catch (error) {
     console.log("Get product by id error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -122,7 +127,7 @@ exports.updateProduct = async (req, res) => {
     res.json(product);
   } catch (error) {
     console.log("Update product error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -143,7 +148,7 @@ exports.removeProduct = async (req, res) => {
     res.json({ message: "Remove product successfully" });
   } catch (error) {
     console.log("Remove product error :", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -169,7 +174,7 @@ exports.listProductBy = async (req, res) => {
     res.json(products);
   } catch (error) {
     console.log("Sort product error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -194,7 +199,7 @@ exports.searchProductByName = async (req, res, query) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by name error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -220,7 +225,7 @@ const searchProductByPrice = async (req, res, priceRange) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by price error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -245,7 +250,7 @@ const searchProductByCategory = async (req, res, categoryId) => {
     res.json(products);
   } catch (error) {
     console.log("Search product by category error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -264,7 +269,7 @@ exports.searchFilter = async (req, res) => {
     }
   } catch (error) {
     console.log("Search filter error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -279,7 +284,7 @@ exports.addImages = async (req, res) => {
     res.json(result);
   } catch (error) {
     console.log("Search filter error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -292,6 +297,6 @@ exports.removeImages = async (req, res) => {
     });
   } catch (error) {
     console.log("Remove images error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
