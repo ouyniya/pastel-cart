@@ -25,13 +25,17 @@ exports.createCategory = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Create category error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
 exports.categoryList = async (req, res) => {
   try {
-    const category = await prisma.category.findMany();
+    const category = await prisma.category.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
 
     if (!category) {
       return createError(404, "No category");
@@ -40,7 +44,7 @@ exports.categoryList = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Get category error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };
 
@@ -64,6 +68,6 @@ exports.removeCategory = async (req, res) => {
     res.json(category);
   } catch (error) {
     console.log("Remove category error: ", error);
-    res.status(500).json({ errors: error.message })
+    res.status(500).json({ errors: error.message });
   }
 };

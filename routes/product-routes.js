@@ -27,6 +27,8 @@ const { authCheck, adminCheck } = require("../middlewares/auth-check");
  *   post:
  *     summary: Create a new product
  *     tags: [Products]
+ *     security:
+ *        - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -70,7 +72,7 @@ const { authCheck, adminCheck } = require("../middlewares/auth-check");
  *       500:
  *         description: Internal server error
  */
-router.post("/product", createProduct);
+router.post("/product", authCheck, adminCheck, createProduct);
 
 /**
  * @swagger
@@ -123,6 +125,8 @@ router.get("/product/:id", getProducts);
  *   put:
  *     summary: Update a product
  *     tags: [Products]
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -165,7 +169,7 @@ router.get("/product/:id", getProducts);
  *       404:
  *         description: Product not found
  */
-router.put("/product/:id", updateProduct);
+router.put("/product/:id", authCheck, adminCheck, updateProduct);
 
 /**
  * @swagger
@@ -173,6 +177,8 @@ router.put("/product/:id", updateProduct);
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
+ *     security:
+ *        - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -185,7 +191,7 @@ router.put("/product/:id", updateProduct);
  *       404:
  *         description: Product not found
  */
-router.delete("/product/:id", removeProduct);
+router.delete("/product/:id", authCheck, adminCheck, removeProduct);
 
 /**
  * @swagger
